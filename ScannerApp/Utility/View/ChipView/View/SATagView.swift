@@ -20,6 +20,7 @@ struct SATagView: View {
     var body: some View {
         Label(tag.title, systemImage: tag.image)
             .bold()
+            .font(.subheadline)
             .padding(defaultPadding)
             .foregroundStyle(isSelected ? selectedTagColor : tag.defaultImageColor)
             .background(isSelected ? selectedTagColor.opacity(0.2) : tag.defaultImageColor.opacity(0.2))
@@ -27,3 +28,7 @@ struct SATagView: View {
     }
 }
 
+
+#Preview {
+    SATagView(isSelected: true, tag: SATagsViewDisplayModel(title: "Tag", image: "tag.circle.fill", defaultImageColor: .red))
+}

@@ -9,100 +9,38 @@
 import SwiftUI
 
 struct SADashboardView: View {
-    @State private var selectedTagIdx: Int = 0
-    
-    private func getTags() -> [SATagsViewDisplayModel] {
-        [
-            SATagsViewDisplayModel(title: "Photos", image: "photo", defaultImageColor: .gray),
-            SATagsViewDisplayModel(title: "Documents", image: "document", defaultImageColor: .gray)
-        ]
-    }
+
+    @StateObject var viewModel: SADashboardViewModel
     
     var body: some View {
         NavigationStack {
             List {
-                SAChipsView(selectedTagIdx: $selectedTagIdx, tags: getTags())
+                SAChipsView(selectedTagIdx: $viewModel.selectedTagIdx, tags: viewModel.getTags())
                 
-                Section("Selected Attachment: \(getTags()[selectedTagIdx].title)") {
-                    
+                Section {
+                    SADashboardCellView(image: .L_1)
+                    SADashboardCellView(image: .L_2)
+                } header: {
                     HStack {
-                        Image(.L_1)
-                            .resizable()
-                            .font(.title)
-                            .frame(width: 50, height: 50)
-                            .clipShape(.rect(cornerRadius: 5))
+                        Text("Today \(viewModel.getSelectedTagTitle(viewModel.selectedTagIdx))")
                         
-                        VStack(alignment: .leading) {
-                            Text("heading-of-the-image.jpg")
-                                .font(.headline)
-                                .foregroundColor(.primary)
-                            
-                            HStack {
-                                Text("\(Date.now.formatted())")
-                                    .font(.subheadline)
-                                    .foregroundColor(.secondary)
-                                
-                                
-                                Spacer()
-                                Text("1.2 MB")
-                                    .font(.subheadline)
-                                    .foregroundColor(.primary)
-                            }
-                        }
+                        Spacer()
+                        
+                        Text("2")
                     }
-                    
-                    
+                }
+                
+                Section {
+                    SADashboardCellView(image: .L_1)
+                    SADashboardCellView(image: .L_2)
+                    SADashboardCellView(image: .L_1)
+                } header: {
                     HStack {
-                        Image(.L_2)
-                            .resizable()
-                            .font(.title)
-                            .foregroundStyle(.indigo)
-                            .frame(width: 50, height: 50)
-                            .clipShape(.rect(cornerRadius: 5))
+                        Text("Yesterday \(viewModel.getSelectedTagTitle(viewModel.selectedTagIdx))")
                         
-                        VStack(alignment: .leading) {
-                            Text("heading-of-the-image.jpg")
-                                .font(.headline)
-                                .foregroundColor(.primary)
-                            
-                            HStack {
-                                Text("\(Date.now.formatted())")
-                                    .font(.subheadline)
-                                    .foregroundColor(.secondary)
-                                
-                                Spacer()
-                                Text("4.6 MB")
-                                    .font(.subheadline)
-                                    .foregroundColor(.primary)
-                            }
-                        }
-                    }
-                    
-                    
-                    HStack {
-                        Image(.L_1)
-                            .resizable()
-                            .font(.title)
-                            .frame(width: 50, height: 50)
-                            .clipShape(.rect(cornerRadius: 5))
+                        Spacer()
                         
-                        VStack(alignment: .leading) {
-                            Text("heading-of-the-image.jpg")
-                                .font(.headline)
-                                .foregroundColor(.primary)
-                            
-                            HStack {
-                                Text("\(Date.now.formatted())")
-                                    .font(.subheadline)
-                                    .foregroundColor(.secondary)
-                                
-                                
-                                Spacer()
-                                Text("200 KB")
-                                    .font(.subheadline)
-                                    .foregroundColor(.primary)
-                            }
-                        }
+                        Text("3")
                     }
                 }
             }
@@ -110,16 +48,32 @@ struct SADashboardView: View {
             .navigationTitle("Dashboard")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Image(systemName: "camera")
-                        .foregroundStyle(Color.appColor)
+                    NavigationLink {
+                        Text("Camera Icon")
+                    } label: {
+                        Image(systemName: viewModel.getCameraIcon(viewModel.selectedTagIdx))
+                            .foregroundStyle(Color.appColor)
+                    }
+                }
+                
+                ToolbarItem(placement: .topBarLeading) {
+                    NavigationLink {
+                        Text("Add Filters")
+                    } label: {
+                        Image(systemName: "line.3.horizontal.decrease.circle")
+                            .foregroundStyle(Color.appColor)
+                    }
                 }
             }
+            .searchable(text: $viewModel.searchText)
         }
     }
 }
 
-#Preview { SADashboardView() }
+#Preview { SADashboardView(viewModel: .init()) }
 
 extension Color {
     static var appColor: Color { .purple.mix(with: .blue, by: 0.8) }
 }
+
+

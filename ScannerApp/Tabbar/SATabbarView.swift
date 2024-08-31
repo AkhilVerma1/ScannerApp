@@ -11,12 +11,17 @@ import SwiftUI
 struct SATabbarView: View {
     var body: some View {
         TabView {
-            SADashboardView()
+            SADashboardView(viewModel: .init())
                 .tabItem {
                     Label("Dashboard", systemImage: "house")
                 }
             
-            SADashboardView()
+            SADashboardView(viewModel: .init())
+                .tabItem {
+                    Label("Favorites", systemImage: "star")
+                }
+            
+            SASettingsView()
                 .tabItem {
                     Label("Settings", systemImage: "gearshape")
                 }
