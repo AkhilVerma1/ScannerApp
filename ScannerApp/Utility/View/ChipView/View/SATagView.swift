@@ -14,13 +14,12 @@ struct SATagView: View {
     let tag: SATagsViewDisplayModel
     let selectedTagColor: Color = Color.appColor
     
-    private let defaultPadding: CGFloat = 12
+    private let defaultPadding: CGFloat = 10
     private let defaultCornerRadius: CGFloat = 10
     
     var body: some View {
         Label(tag.title, systemImage: tag.image)
-            .bold()
-            .font(.subheadline)
+            .font(.headline)
             .padding(defaultPadding)
             .foregroundStyle(isSelected ? selectedTagColor : tag.defaultImageColor)
             .background(isSelected ? selectedTagColor.opacity(0.2) : tag.defaultImageColor.opacity(0.2))

@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct SADashboardView: View {
-
+    @State private var scannedImages: [UIImage] = []
     @StateObject var viewModel: SADashboardViewModel
     
     var body: some View {
@@ -22,7 +22,7 @@ struct SADashboardView: View {
                     SADashboardCellView(image: .L_2)
                 } header: {
                     HStack {
-                        Text("Today \(viewModel.getSelectedTagTitle(viewModel.selectedTagIdx))")
+                        Text("Today's \(viewModel.getSelectedTagTitle(viewModel.selectedTagIdx))")
                         
                         Spacer()
                         
@@ -32,11 +32,23 @@ struct SADashboardView: View {
                 
                 Section {
                     SADashboardCellView(image: .L_1)
+                } header: {
+                    HStack {
+                        Text("Yesterday's \(viewModel.getSelectedTagTitle(viewModel.selectedTagIdx))")
+                        
+                        Spacer()
+                        
+                        Text("1")
+                    }
+                }
+                
+                Section {
+                    SADashboardCellView(image: .L_1)
                     SADashboardCellView(image: .L_2)
                     SADashboardCellView(image: .L_1)
                 } header: {
                     HStack {
-                        Text("Yesterday \(viewModel.getSelectedTagTitle(viewModel.selectedTagIdx))")
+                        Text("All \(viewModel.getSelectedTagTitle(viewModel.selectedTagIdx))")
                         
                         Spacer()
                         
@@ -53,19 +65,20 @@ struct SADashboardView: View {
                     } label: {
                         Image(systemName: viewModel.getCameraIcon(viewModel.selectedTagIdx))
                             .foregroundStyle(Color.appColor)
+                            
                     }
                 }
                 
                 ToolbarItem(placement: .topBarLeading) {
                     NavigationLink {
-                        Text("Add Filters")
+                        SADocumentScannerView(scannedImages: $scannedImages)
                     } label: {
                         Image(systemName: "line.3.horizontal.decrease.circle")
                             .foregroundStyle(Color.appColor)
                     }
                 }
             }
-            .searchable(text: $viewModel.searchText)
+            .searchable(text: $viewModel.searchText, placement: .navigationBarDrawer(displayMode: .always))
         }
     }
 }
@@ -75,5 +88,4 @@ struct SADashboardView: View {
 extension Color {
     static var appColor: Color { .purple.mix(with: .blue, by: 0.8) }
 }
-
 

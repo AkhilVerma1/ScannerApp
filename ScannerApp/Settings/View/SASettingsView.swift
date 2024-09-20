@@ -9,11 +9,25 @@
 import SwiftUI
 
 struct SASettingsView: View {
+    @StateObject var viewModel: SASettingsViewModel
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationStack {
+            List{
+                Button {
+                    viewModel.didTapClearAllDataBtn()
+                } label: {
+                    Text("Clear All Data")
+                }
+                .tint(.red)
+
+            }
+            .navigationTitle("Settings")
+        }
     }
 }
 
 #Preview {
-    SASettingsView()
+    SASettingsView(viewModel: .init())
 }
+

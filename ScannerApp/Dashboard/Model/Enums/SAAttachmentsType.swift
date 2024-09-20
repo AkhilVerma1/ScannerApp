@@ -6,11 +6,9 @@
 //  Copyright © 2024 OCloud Labs. All rights reserved.
 //
 
-
 import Foundation
 
 enum SAAttachmentsType: String, CaseIterable {
-    case audio = "Audio"
     case photos = "Photos"
     case documents = "Documents"
 }

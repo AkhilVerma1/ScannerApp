@@ -11,22 +11,35 @@ import Foundation
 class SADashboardViewModel: ObservableObject {
     @Published var selectedTagIdx: Int = 0
     @Published var searchText: String = .init()
-
-    private var sections: [SAAttachmentsType] = [.photos, .documents, .audio]
+    
+    private var sections: [SADashboardSectionDisplayModel] = []
+    
+    init() {
+        sections = getSections()
+    }
     
     func getCameraIcon(_ selectedTag: Int) -> String {
-        sections[selectedTag] == .photos ? "camera" : "doc.viewfinder"
+        sections[selectedTag].toolbarIcon
     }
     
     func getSelectedTagTitle(_ selectedTag: Int) -> String {
-        sections[selectedTag].rawValue
+        sections[selectedTag].title
     }
     
     func getTags() -> [SATagsViewDisplayModel] {
         [
             SATagsViewDisplayModel(title: "Photos", image: "photo", defaultImageColor: .gray),
-            SATagsViewDisplayModel(title: "Documents", image: "document", defaultImageColor: .gray),
-            SATagsViewDisplayModel(title: "Audio", image: "music.note", defaultImageColor: .gray)
+            SATagsViewDisplayModel(title: "Documents", image: "document", defaultImageColor: .gray)
+        ]
+    }
+}
+
+private extension SADashboardViewModel {
+    
+    func getSections() -> [SADashboardSectionDisplayModel] {
+        [
+            SADashboardSectionDisplayModel(title: SAAttachmentsType.photos.rawValue, toolbarIcon: "camera", attachmentType: .photos),
+            SADashboardSectionDisplayModel(title: SAAttachmentsType.documents.rawValue, toolbarIcon: "doc.viewfinder", attachmentType: .documents)
         ]
     }
 }

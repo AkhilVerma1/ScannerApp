@@ -16,12 +16,7 @@ struct SATabbarView: View {
                     Label("Dashboard", systemImage: "house")
                 }
             
-            SADashboardView(viewModel: .init())
-                .tabItem {
-                    Label("Favorites", systemImage: "star")
-                }
-            
-            SASettingsView()
+            SASettingsView(viewModel: .init())
                 .tabItem {
                     Label("Settings", systemImage: "gearshape")
                 }

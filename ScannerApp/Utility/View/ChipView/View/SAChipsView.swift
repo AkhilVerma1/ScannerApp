@@ -16,7 +16,7 @@ struct SAChipsView: View {
     
     var body: some View {
         ScrollView(.horizontal) {
-            HStack {
+            HStack(spacing: 15) {
                 ForEach(Array(tags.enumerated()), id: \.offset) { idx, tag in
                     SATagView(isSelected: selectedTagIdx == idx, tag: tag)
                         .onTapGesture {

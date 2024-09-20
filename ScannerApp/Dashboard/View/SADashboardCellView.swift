@@ -6,7 +6,6 @@
 //  Copyright © 2024 OCloud Labs. All rights reserved.
 //
 
-
 import SwiftUI
 
 struct SADashboardCellView: View {
@@ -18,14 +17,15 @@ struct SADashboardCellView: View {
             Image(image)
                 .resizable()
                 .font(.title)
-                .frame(width: 70, height: 70)
+                .frame(width: 75)
                 .clipShape(.rect(cornerRadius: 10))
             
             VStack(alignment: .leading) {
                 
                 HStack {
-                    Text("heading-of-the-image.jpg")
+                    Text("Heading of the Image.jpg")
                         .font(.headline)
+                        .lineLimit(1)
                         .foregroundColor(.primary)
                     
                     Spacer()
@@ -39,37 +39,38 @@ struct SADashboardCellView: View {
                     }
 
                 }
-                Text("\(Date.now.formatted())")
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
+
+                // add location hstack
+                
+                HStack(spacing: 3) {
+                    Image(systemName: "location.fill")
+                        .foregroundStyle(Color.appColor)
+                    
+                    Text("Green Avenue, PB")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                }
                 
                 HStack {
-                    Text("# JPEG / JPG")
-                        .font(.caption2.weight(.medium))
+                    Text("JPEG / JPG")
+                        .font(.caption2.weight(.semibold))
                         .padding(4)
                         .foregroundStyle(.orange)
                         .background(.orange.opacity(0.1))
                         .clipShape(.rect(cornerRadius: 5))
                     
-                    
-                    Text("# Offline")
-                        .font(.caption2.weight(.medium))
-                        .padding(4)
-                        .foregroundStyle(.gray)
-                        .background(.gray.opacity(0.1))
-                        .clipShape(.rect(cornerRadius: 5))
-                    
                     Spacer()
                     Text("1.28 MB")
                         .font(.subheadline)
-                        .foregroundColor(.blue)
+                        .foregroundColor(Color.appColor)
                 }
                 
             }
             
             
-            
         }
+        .frame(height: 75)
+
     }
 }
 
